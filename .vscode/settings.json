@@ -1,3 +1,11 @@
 {
-    "python.pythonPath": "venv\\Scripts\\python.exe"
+    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "sqltools.connections": [
+        {
+            "database": ".\\app.db",
+            "dialect": "SQLite",
+            "name": "Database"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }
