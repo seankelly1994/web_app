@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Clients from './components/clients/index';
 import Sidebar from './components/sidebar/index';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 function App() {
   const [clients, setClients] = useState([]);
@@ -14,10 +15,14 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-    <Sidebar></Sidebar>
-      <Clients clients={clients}></Clients>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+      <Sidebar></Sidebar>
+      <Route path="/"></Route>
+      <Route path="/clients" exact component={Clients}><Clients clients={clients}></Clients></Route>
+        
+      </div>
+    </BrowserRouter>
   );
 }
 
