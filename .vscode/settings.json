@@ -2,10 +2,14 @@
     "python.pythonPath": "venv\\Scripts\\python.exe",
     "sqltools.connections": [
         {
-            "database": ".\\app.db",
-            "dialect": "SQLite",
-            "name": "Database"
+            "connectionTimeout": 30,
+            "database": "billing_app",
+            "dialect": "PostgreSQL",
+            "name": "billing_app",
+            "password": "Vincentk1994!",
+            "port": 5432,
+            "server": "localhost",
+            "username": "kelster1994"
         }
-    ],
-    "sqltools.useNodeRuntime": true
+    ]
 }

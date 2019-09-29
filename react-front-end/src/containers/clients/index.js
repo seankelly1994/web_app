@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import Clients from '../../components/clients/index';
+import Clients from '../../components/clientList/index';
 
 const ClientPage = () => {
     const [clients, setClients] = useState([]);
