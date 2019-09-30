@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import Clients from '../../components/clientList/index';
+import CreateClient from '../../components/createclient/index';
 
 const ClientPage = () => {
     const [clients, setClients] = useState([]);
@@ -13,8 +14,12 @@ const ClientPage = () => {
 
 
         return (
+            <div>
+            <CreateClient></CreateClient>
             <Clients clients={clients}></Clients>
+            </div>
+            
         )
-}
+} 
 
 export default ClientPage;

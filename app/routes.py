@@ -4,12 +4,14 @@ from app import db
 from app.models import Client
 
 @app.route("/")
+@app.route('/index')
 def hello():
     return "Hello World!"
 
 @app.route('/create_client', methods=['POST'])
-def add_client():
+def create_client():
     client_data = request.get_json()
+    print(client_data)
     
     new_client = Client(first_name=client_data['first_name'], 
                         last_name=client_data['last_name'],

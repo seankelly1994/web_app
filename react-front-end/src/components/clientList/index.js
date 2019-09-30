@@ -1,5 +1,4 @@
 import React from 'react';
-import {useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
@@ -8,14 +7,6 @@ const Clients = ({clients}) => {
     return (
         <Table responsive>
             <thead>
-                <tr>
-                    <td>Search</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <Button>Create</Button>
-                    </td>
-                </tr>
                 <tr>
                     <th>First Name</th>
                     <th>last Name</th>
