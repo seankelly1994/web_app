@@ -13,11 +13,12 @@ def create_client():
     client_data = request.get_json()
     print(client_data)
     
-    new_client = Client(first_name=client_data['first_name'], 
-                        last_name=client_data['last_name'],
-                        email_address=client_data['email_address'], 
-                        business_phone=client_data['business_phone']
-                        )
+    new_client = Client(
+                        first_name=client_data['firstName'], 
+                        last_name=client_data['lastName'],
+                        email_address=client_data['emailAddress'], 
+                        business_phone=client_data['businessPhone']
+    )
 
     #Commit the session
     db.session.add(new_client)

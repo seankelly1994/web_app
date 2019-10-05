@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import './style.css';
 
 const CreateClient = () => {
-    
+
         const [firstName, setFirstName] = useState('');
         const [lastName, setLastName] = useState('');
         const [emailAddress, setEmailAddress] = useState('');
@@ -23,7 +23,7 @@ const CreateClient = () => {
                     </Col>
                     <Col sm={3}>
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Last Name"  value={lastName} 
+                        <Form.Control type="text" placeholder="Enter Last Name"  value={lastName}
                                         onChange={e => setLastName(e.target.value)}>
                         </Form.Control>
                     </Col>
@@ -46,15 +46,17 @@ const CreateClient = () => {
 
 
                 <Button variant="primary" type="submit" onClick={async() => {
-                    const client = {firstName, lastName};
+                    const client = {firstName, lastName, emailAddress, businessPhone};
     
                     const response = fetch('/create_client', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            "Content-Type": "application/json"
                         },
                         body: JSON.stringify(client)
                     })
+
+                    console.log(client);
     
                     if (response.ok) {
                         console.log('Response Worked')
