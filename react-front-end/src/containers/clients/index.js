@@ -4,7 +4,6 @@ import CreateClient from '../../components/createclient/index';
 
 const ClientPage = () => {
     const [clients, setClients] = useState([]);
-    const [display, setDisplay] = useState(false);
 
     useEffect(() => {
         fetch('/clients').then(response => response.json().then(data => {
