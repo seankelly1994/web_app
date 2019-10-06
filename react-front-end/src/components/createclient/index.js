@@ -4,49 +4,84 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import './style.css';
 
-const CreateClient = () => {
+class CreateClient extends Component {
+    constructor(props) {
+        super(props);
 
-        const [firstName, setFirstName] = useState('');
-        const [lastName, setLastName] = useState('');
-        const [emailAddress, setEmailAddress] = useState('');
-        const [businessPhone, setBusinessPhone] = useState('');
-    
+        this.state = {
+            firstName: '',
+            lastName: '',
+            emailAddress: '',
+            businessPhone: ''
+        }
+    }
+
+    setFirstName = e => {
+        this.setState({
+            firstName: e.target.value
+        });
+    }
+
+    setLastName = e => {
+        this.setState({
+            lastName: e.target.value
+        });
+    }
+
+    setEmailAddress = e => {
+        this.setState({
+            emailAddress: e.target.value
+        });
+    }
+
+    setBusinessPhone = e => {
+        this.setState({
+            businessPhone: e.target.value
+        });
+    }
+
+    render() {
+        const { firstName } = this.state;
+        const { lastName } = this.state;
+        const { emailAddress } = this.state;
+        const { businessPhone } = this.state;
 
         return (
-            <div className="ClientForm">
             <Form className="ClientFormInner">
                 <Form.Row controlId="formName" className="RowDetails" className="justify-content-md-center">
                     <Col sm={3}>
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter First Name" value={firstName} 
-                                        onChange={e => setFirstName(e.target.value)}>
+                        <Form.Control type="text" placeholder="Enter First Name" value={this.firstName} 
+                                        onChange={this.setFirstName}>
                         </Form.Control>
                     </Col>
+
                     <Col sm={3}>
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Last Name"  value={lastName}
-                                        onChange={e => setLastName(e.target.value)}>
+                        <Form.Control type="text" placeholder="Enter Last Name" value={this.lastName} 
+                                        onChange={this.setLastName}>
                         </Form.Control>
                     </Col>
                 </Form.Row>
 
-                <Form.Row controlId="formContactDetails" className="justify-content-md-center">
+                <Form.Row controlId="formName" className="RowDetails" className="justify-content-md-center">
                     <Col sm={3}>
-                        <Form.Label>Email Address</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Email" value={emailAddress} 
-                                        onChange={e => setEmailAddress(e.target.value)}>
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter First Name" value={this.emailAddress} 
+                                        onChange={this.setEmailAddress}>
                         </Form.Control>
                     </Col>
+
                     <Col sm={3}>
-                        <Form.Label>Business Phone</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Business Phone"  value={businessPhone} 
-                                        onChange={e => setBusinessPhone(e.target.value)}>
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter First Name" value={this.businessPhone} 
+                                        onChange={this.setBusinessPhone}>
                         </Form.Control>
                     </Col>
                 </Form.Row>
 
-                <Button>Cancel</Button>
 
+                <Button onClick={this.props.closeForm}>Cancel</Button>
 
                 <Button variant="primary" type="submit" onClick={async() => {
                     const client = {firstName, lastName, emailAddress, businessPhone};
@@ -64,12 +99,10 @@ const CreateClient = () => {
                     if (response.ok) {
                         console.log('Response Worked')
                     }
-                }}>
-                    Submit
-                </Button>
+                }}>Submit</Button>
             </Form>
-            </div>
         )
     }
+}
 
 export default CreateClient;

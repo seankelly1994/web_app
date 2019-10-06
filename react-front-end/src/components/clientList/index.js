@@ -62,6 +62,6 @@ class Clients extends Component {
             </div>
         )
     }
-}
+} 
 
 export default Clients;
