@@ -5,10 +5,11 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import original_billing from '../../assets/images/original_billing.png';
+import './style.css';
 
 const TopNavBar = () => {
     return (
-      <Navbar bg="dark" variant="dark">
+      <Navbar className="TopBar">
         <Navbar.Brand href="#home">
           <img src={original_billing} width="50px"></img>
         </Navbar.Brand>

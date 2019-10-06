@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import CreateClient from '../createclient/index';
 
 class Clients extends Component {
     constructor(props){
@@ -15,37 +16,50 @@ class Clients extends Component {
         fetch('/clients').then(response => response.json())
         .then(data => this.setState({clients: data.clients}))
     }
+
+    toggleCreateClient() {
+        this.setState({
+            showForm: !this.state.showForm
+        });
+    }
     
     render() {
         const { clients } = this.state;
 
         return (
-            <Table responsive>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <Button>Create</Button>
-                    </td>
-                </tr>
-                <tr>
-                    <th>First Name</th>
-                    <th>last Name</th>
-                    <th>Business Phone</th>
-                    <th>Email Address</th>
-                </tr>
-            </thead>
-                    {clients.map(client => (
+            <div>
+                {this.state.showForm ?
+                    <CreateClient closeForm={this.toggleCreateClient.bind(this)}></CreateClient>
+                    : null
+                }
+                
+                <Table responsive>
+                    <thead>
                         <tr>
-                            <td key={client}>{client.first_name}</td>
-                            <td key={client}>{client.last_name}</td>
-                            <td key={client}>{client.email_address}</td>
-                            <td key={client}>{client.business_phone}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <Button onClick={this.toggleCreateClient.bind(this)}>Create</Button>
+                            </td>
                         </tr>
-                    ))}
-            </Table>
+                        <tr>
+                            <th>First Name</th>
+                            <th>last Name</th>
+                            <th>Business Phone</th>
+                            <th>Email Address</th>
+                        </tr>
+                    </thead>
+                        {clients.map(client => (
+                            <tr>
+                                <td key={client}>{client.first_name}</td>
+                                <td key={client}>{client.last_name}</td>
+                                <td key={client}>{client.email_address}</td>
+                                <td key={client}>{client.business_phone}</td>
+                            </tr>
+                        ))}
+                </Table>
+            </div>
         )
     }
 }

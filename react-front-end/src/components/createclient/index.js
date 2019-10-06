@@ -13,7 +13,8 @@ const CreateClient = () => {
     
 
         return (
-            <Form>
+            <div className="ClientForm">
+            <Form className="ClientFormInner">
                 <Form.Row controlId="formName" className="RowDetails" className="justify-content-md-center">
                     <Col sm={3}>
                         <Form.Label>First Name</Form.Label>
@@ -44,6 +45,8 @@ const CreateClient = () => {
                     </Col>
                 </Form.Row>
 
+                <Button>Cancel</Button>
+
 
                 <Button variant="primary" type="submit" onClick={async() => {
                     const client = {firstName, lastName, emailAddress, businessPhone};
@@ -65,6 +68,7 @@ const CreateClient = () => {
                     Submit
                 </Button>
             </Form>
+            </div>
         )
     }
 
