@@ -47,60 +47,62 @@ class CreateClient extends Component {
         const { businessPhone } = this.state;
 
         return (
-            <Form className="ClientFormInner">
-                <Form.Row controlId="formName" className="RowDetails" className="justify-content-md-center">
-                    <Col sm={3}>
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter First Name" value={this.firstName} 
-                                        onChange={this.setFirstName}>
-                        </Form.Control>
-                    </Col>
+            <div className="ClientForm">
+                <Form className="ClientFormInner">
+                    <Form.Row controlId="formName" className="justify-content-md-center">
+                        <Col sm={3}>
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter First Name" value={this.firstName} 
+                                            onChange={this.setFirstName}>
+                            </Form.Control>
+                        </Col>
 
-                    <Col sm={3}>
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Last Name" value={this.lastName} 
-                                        onChange={this.setLastName}>
-                        </Form.Control>
-                    </Col>
-                </Form.Row>
+                        <Col sm={3}>
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Last Name" value={this.lastName} 
+                                            onChange={this.setLastName}>
+                            </Form.Control>
+                        </Col>
+                    </Form.Row>
 
-                <Form.Row controlId="formName" className="RowDetails" className="justify-content-md-center">
-                    <Col sm={3}>
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter First Name" value={this.emailAddress} 
-                                        onChange={this.setEmailAddress}>
-                        </Form.Control>
-                    </Col>
+                    <Form.Row controlId="formName" className="justify-content-md-center">
+                        <Col sm={3}>
+                            <Form.Label>Email Address</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Email" value={this.emailAddress} 
+                                            onChange={this.setEmailAddress}>
+                            </Form.Control>
+                        </Col>
 
-                    <Col sm={3}>
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter First Name" value={this.businessPhone} 
-                                        onChange={this.setBusinessPhone}>
-                        </Form.Control>
-                    </Col>
-                </Form.Row>
+                        <Col sm={3}>
+                            <Form.Label>Business Phone</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Business Phone" value={this.businessPhone} 
+                                            onChange={this.setBusinessPhone}>
+                            </Form.Control>
+                        </Col>
+                    </Form.Row>
 
 
-                <Button onClick={this.props.closeForm}>Cancel</Button>
+                    <Button onClick={this.props.closeForm}>Cancel</Button>
 
-                <Button variant="primary" type="submit" onClick={async() => {
-                    const client = {firstName, lastName, emailAddress, businessPhone};
-    
-                    const response = fetch('/create_client', {
-                        method: 'POST',
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(client)
-                    })
+                    <Button variant="primary" type="submit" onClick={async() => {
+                        const client = {firstName, lastName, emailAddress, businessPhone};
+        
+                        const response = fetch('/create_client', {
+                            method: 'POST',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(client)
+                        })
 
-                    console.log(client);
-    
-                    if (response.ok) {
-                        console.log('Response Worked')
-                    }
-                }}>Submit</Button>
-            </Form>
+                        console.log(client);
+        
+                        if (response.ok) {
+                            console.log('Response Worked')
+                        }
+                    }}>Submit</Button>
+                </Form>
+            </div>
         )
     }
 }

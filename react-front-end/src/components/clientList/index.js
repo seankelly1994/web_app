@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import CreateClient from '../createclient/index';
 
-class Clients extends Component {
+class ClientList extends Component {
     constructor(props){
         super(props);
 
@@ -50,6 +50,7 @@ class Clients extends Component {
                             <th>Email Address</th>
                         </tr>
                     </thead>
+                    
                         {clients.map(client => (
                             <tr>
                                 <td key={client}>{client.first_name}</td>
@@ -57,6 +58,7 @@ class Clients extends Component {
                                 <td key={client}>{client.email_address}</td>
                                 <td key={client}>{client.business_phone}</td>
                             </tr>
+                            
                         ))}
                 </Table>
             </div>
@@ -64,4 +66,4 @@ class Clients extends Component {
     }
 } 
 
-export default Clients;
+export default ClientList;

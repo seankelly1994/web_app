@@ -10,6 +10,7 @@
     background-color: rgba(0,0,0, 0.5);  
   }  
   .ClientFormInner {  
+    padding-top: 2%;
     position: absolute;  
     left: 20%;  
     right: 20%;  
@@ -18,4 +19,14 @@
     background-color: #254e58;
     border-radius: 25px;
     color: white;
+  }
+
+  .Button {
+      padding-bottom: 2%;
+      padding-top: 2%;
+  }
+
+  .InputRow {
+    width: 50%;
+    margin: auto;
   }

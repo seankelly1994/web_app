@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
-import Clients from '../../components/clientList/index';
-import CreateClient from '../../components/createclient/index';
+import ClientList from '../../components/clientList/index';
+import Pagination from 'react-bootstrap/Pagination'
 
 const ClientPage = () => {
     const [clients, setClients] = useState([]);
@@ -15,8 +15,7 @@ const ClientPage = () => {
 
         return (
             <div>
-            
-            <Clients clients={clients}></Clients>
+                <ClientList clients={clients}></ClientList>
             </div>
             
         )
