@@ -1,8 +1,7 @@
 from app import app
 from app import db
 from werkzeug.security import check_password_hash
-from app import login
-from flask_login import UserMixin
+from passlib.hash import pbkdf2_sha256 as sha256
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +24,36 @@ class User(db.Model):
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
+    
+    @classmethod
+    def find_by_username(cls, username):
+        return clas.query.filter_by(username=username).first()
+
+    @classmethod
+    def return_all(cls):
+        def to_json(x):
+            return {
+                'username': x.username,
+                'password': x.password
+            }
+        return {'users': list(map(lambda x: to_json(x), UserModel.query.all()))}
+
+    @classmethod
+    def delete_all(cls):
+        try:
+            num_rows_deleted = db.session.query(cls).delete()
+            db.session.commit()
+            return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
+        except:
+            return {'message': 'Something went wrong'}
+
+    @staticmethod
+    def generate_hash(password):
+        return sha256.hash(password)
+
+    @staticmethod
+    def verify_hash(password, hash):
+        return sha256.verify(password, hash)
 
 
 class Client(db.Model):
@@ -38,7 +67,17 @@ class Client(db.Model):
     def __repr__(self):
         return '<Client()>'.format(self.first_name)
 
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+class RevokedToken(db.Model):
+    __tablename__ = 'revoked tokens'
+    id = db.Column(db.Integer, primary_key=True)
+    jti = db.Column(db.String(120))
+
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
     
+    @classmethod
+    def is_jti_blacklisted(cls, jti):
+        query = cls.query.filter_by(jti=jti).first()
+
+        return bool(query)

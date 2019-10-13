@@ -55,11 +55,6 @@ def clients():
 
     return  jsonify({'clients': clients})
 
-#@app.route('/register')
-#def register():
- #   user_data = request.get_json()
-
-  #  new_user = 
 
 
 if __name__ == '__main__':

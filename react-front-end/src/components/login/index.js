@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import "./style.css";
 import Button from 'react-bootstrap/Button';
-import Register from '../register/index';
 
 const Login = (props)  => {
   const [email, setEmail] = useState("");
