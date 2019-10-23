@@ -9,42 +9,46 @@ parser.add_argument('password', help = 'This field cannot be blank', required = 
 
 class UserRegistration(Resource):
     def post(self):
-        data = parser.parse_args()
+        user_data = parser.parse_args()
 
-        if User.find_by_username(data['username']):
-            return {'message': 'User {} already exists'.format(data['username'])}
+        if User.find_by_username(user_data['username']):
+            return {'message': 'User {} already exists'.format(user_data['username'])}
 
-        new_user = UserModel(
-            username = data['username'],
-            password = User.generate_hash(data['password'])
+        new_user = User(
+            first_name = user_data['firstName'],
+            last_name = user_data['lastName'],
+            email_address = user_data['email'],
+            username = user_data['username'],
+            password = User.generate_hash(user_data['password'])
         )
 
         try:
-            new_user.save_to_db()
-            access_token = create_access_token(identity = data['username'])
-            refresh_token = create_refresh_token(identity = data['username'])
+            db.session.add(new_user)
+            db.session.commit()
+            access_token = create_access_token(identity = user_data['username'])
+            refresh_token = create_refresh_token(identity = user_data['username'])
             return{
-                'message': 'User {} was created'.format(data['username']),
+                'message': 'User {} was created'.format(user_data['username']),
                 'access_token': access_token,
                 'refresh_token': refresh_token
             }
         except:
             return {'message': 'Something went wrong'}, 500
 
-        return data
+        return user_data
 
 
 class UserLogin(Resource):
     def post(self):
-        data = parser.parse_args()
-        current_user = User.find_by_username(data['username'])
+        user_data = parser.parse_args()
+        current_user = User.find_by_username(user_data['username'])
         
         if not current_user:
-            return {'message': 'User {} does not exist'.format(data['username'])}
+            return {'message': 'User {} does not exist'.format(user_data['username'])}
 
         if User.verify_hash(data['password']) == current_user.password:
-            access_token = create_access_token(identity = data['username'])
-            refresh_token = create_refresh_token(identity = data['username'])
+            access_token = create_access_token(identity = user_data['username'])
+            refresh_token = create_refresh_token(identity = user_data['username'])
             return {
                 'message': 'Logged in as {}'.format(current_user.username),
                 'access_token': access_token,
@@ -53,7 +57,7 @@ class UserLogin(Resource):
         else:
             return {'message': 'Wrong Credentials'}
 
-        return data
+        return user_data
       
 class UserLogoutAccess(Resource):
     @jwt_required

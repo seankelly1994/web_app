@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 import json
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 api = Api(app)
@@ -18,6 +19,7 @@ app.config['SECRET_KEY'] = 'something-secret'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
+bcrypt = Bcrypt(app)
 
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
@@ -30,7 +32,7 @@ def check_if_token_in_blacklist(decrypted_token):
 
 from app import routes, models, resources
 
-api.add_resource(resources.UserRegistration, '/registration')
+api.add_resource(resources.UserRegistration, '/register')
 api.add_resource(resources.UserLogin, '/login')
 api.add_resource(resources.UserLogoutAccess, '/logout/access')
 api.add_resource(resources.UserLogoutRefresh, '/logout/refresh')

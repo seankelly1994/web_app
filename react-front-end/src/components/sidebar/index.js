@@ -11,6 +11,7 @@ class SideBar extends Component {
                 <a id="dashboards" className="menu-item" href="/dashboards">Dashboards</a>
                 <a id="billing" className="menu-item" href="/billing">Billing</a>
                 <a id="login" className="menu-item" href="/auth">Login</a>
+                <a id="register" className="menu-item" href="/register">Sign Up</a>
             </Menu>
         )
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Login from '../../components/auth/index';
+import Login from '../../components/login/index';
 
-class LoginPage extends Component {
+class Auth extends Component {
     constructor(props) {
         super(props);
 
@@ -14,4 +14,4 @@ class LoginPage extends Component {
 
     }
 
-export default LoginPage;
+export default Auth;

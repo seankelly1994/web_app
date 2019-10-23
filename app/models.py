@@ -2,6 +2,9 @@ from app import app
 from app import db
 from werkzeug.security import check_password_hash
 from passlib.hash import pbkdf2_sha256 as sha256
+from app import bcrypt
+import datetime
+import jwt
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -10,16 +13,23 @@ class User(db.Model):
     email_address = db.Column(db.String(50))
     clients = db.relationship('Client', backref='owner', lazy='dynamic')
     username = db.Column(db.String(50))
-    password = db.Column(db.String(120), nullable = False)
+    password = db.Column(db.String(120), nullable=False)
+
+    def __init__(self,first_name="",last_name="", username="", email_address="", password=""):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.username = username
+        self.email_address = email_address
+        self.password = password
 
     def __repr__(self):
         return '<User {}'.format(self.username)
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = bcrypt.generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return bcrypt.check_password_hash(self.password_hash, password)
 
     def save_to_db(self):
         db.session.add(self)
@@ -27,7 +37,7 @@ class User(db.Model):
     
     @classmethod
     def find_by_username(cls, username):
-        return clas.query.filter_by(username=username).first()
+        return cls.query.filter_by(username=username).first()
 
     @classmethod
     def return_all(cls):
@@ -36,7 +46,19 @@ class User(db.Model):
                 'username': x.username,
                 'password': x.password
             }
-        return {'users': list(map(lambda x: to_json(x), UserModel.query.all()))}
+        return {'users': list(map(lambda x: to_json(x), User.query.all()))}
+
+    @staticmethod
+    def decode_auth_token(auth_token):
+        '''Decodes the auth token'''
+        try:
+            payload = jwt.decode(
+                auth_token, app.config.get('SECRET_KEY'))
+            return payload
+        except jwt.ExpiredSignature:
+            return 'Signature expired. Please Log in again.'
+        except jwt.InvalidTokenError:
+            return 'Invalid token. Please log in again'
 
     @classmethod
     def delete_all(cls):
@@ -54,6 +76,22 @@ class User(db.Model):
     @staticmethod
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
+
+    def encode_auth_token(self, id):
+        '''Generates the jwt token'''
+        try:
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                    'iat': datetime.datetime.utcnow(),
+                    'sub': id
+            }
+            return jwt.encode(
+                payload,
+                app.config.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
 
 
 class Client(db.Model):
