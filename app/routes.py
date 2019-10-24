@@ -1,15 +1,14 @@
-from app import app, bcrypt
+from app import app
 from flask import Blueprint, jsonify, request
 from app import db
 from app.models import Client
 from app.models import User
-#from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
 from flask_jwt_extended import (create_access_token, create_refresh_token, 
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from flask_restful import Resource, reqparse
 import json
-from flask_bcrypt import generate_password_hash
 
 @app.route("/")
 @app.route('/index')
@@ -26,16 +25,17 @@ def login_user():
     }
     if not user_data:
         return jsonify(response_object), 400
+
     email = user_data.get('email')
     password = user_data.get('password')
-    print(password)
+
     try:
         # fetch the user data
         user = User.query.filter_by(email_address=email).first()
-        hashed_password = user.password
-        print(hashed_password)
-        if user and bcrypt.check_password_hash(hashed_password, password):
+
+        if user and check_password_hash(user.password, password):
             auth_token = user.encode_auth_token(user.id)
+            print(auth_token)
             if auth_token:
                 response_object['status'] = 'success'
                 response_object['message'] = 'Successfully logged in.'
@@ -47,6 +47,7 @@ def login_user():
     except Exception:
         response_object['message'] = 'Try again.'
         return jsonify(response_object), 500
+
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -61,20 +62,16 @@ def register_user():
         return jsonify(response_object), 400
 
     new_user = User(
-        first_name = user_data['firstName'],
-        last_name = user_data['lastName'],
-        username = user_data['email'],
-        email_address = user_data['email'],
-        password = generate_password_hash(user_data['password'])
-    )
-    print(new_user)
+                first_name = user_data['firstName'],
+                last_name = user_data['lastName'],
+                username = user_data['email'],
+                email_address = user_data['email'],
+                password = generate_password_hash(user_data['password'])
+        )
     
     try:
         # check for existing user
         #user = User.query.filter_by(email_address == email)
-
-        print("Checking for existing user")
-        print("Trying to add new user")
         db.session.add(new_user)
         db.session.commit()
         # generate auth token
