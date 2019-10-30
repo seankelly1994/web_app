@@ -9,6 +9,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from flask_restful import Resource, reqparse
 import json
+import time
 
 @app.route("/")
 @app.route('/index')
@@ -49,7 +50,29 @@ def login_user():
         return jsonify(response_object), 500
 
 
-@app.route('/register', methods=['POST'])
+@app.route('/logout', methods=['GET'])
+def logout_user():
+    auth_header = request.headers.get("Authorization")
+    response_object = {
+        "status": "fail",
+        "message": "Provide a valid auth token"
+    }
+
+    if auth_header:
+        auth_token = auth_header.split(" ")[1]
+        resp = User.decode_auth_token(auth_token)
+        if not isinstance(resp, str):
+            response_object["status"] = "success"
+            response_object["message"] = "Successfully logged out"
+            return jsonify(response_object), 200
+        else:
+            response_object["message"] = resp
+            return jsonify(response_object), 401
+    else:
+        return jsonify(response_object), 403
+
+
+@app.route('/register', methods=['POST', 'GET'])
 def register_user():
     # get post data
     user_data = request.get_json()
@@ -75,10 +98,11 @@ def register_user():
         db.session.add(new_user)
         db.session.commit()
         # generate auth token
-        auth_token = new_user.encode_auth_token(new_user.email_address)
+        auth_token = new_user.encode_auth_token(new_user.id)
         response_object['status'] = 'success'
         response_object['message'] = 'Successfully registered.'
         response_object['auth_token'] = auth_token.decode()
+
         return jsonify(response_object), 201
     # handler errors
     except:

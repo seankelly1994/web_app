@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
+import axios from 'axios';
 import "./style.css";
 import Button from 'react-bootstrap/Button';
+import { Redirect } from 'react-router-dom';
 
 const Login = (props)  => {
   const [email, setEmail] = useState("");
@@ -47,21 +49,16 @@ const Login = (props)  => {
                 </Form.Row>
             </Form.Group>
 
-            <Button disabled={!validateForm()} type="submit" onClick={async() => {
-                const user = {email, password};
-
-                const response = fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        "Content_Type": "application/json"
-                    }, 
-                    body: JSON.stringify(user)
+            <Button disabled={!validateForm()} onClick={async() => {
+                const response = axios.post('/login', {
+                    email: email,
+                    password: password
+                }).then(function(response){
+                    window.localStorage.setItem('authToken', response.data.auth_token);
+                    console.log(response);
+                }).catch(function(error){
+                    console.log(error);
                 })
-
-                if(response.ok) {
-                    console.log("Log in successful");
-                }
-
             }}>Login</Button>
         </Form>
       </div>

@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import Login from '../../components/login/index';
+import { Redirect } from 'react-router-dom';
 
-class Auth extends Component {
-    constructor(props) {
-        super(props);
+const Auth = (props) => {
 
-    }
-        render() {
-            return (
-                <Login></Login>
-            )
-        }
+if (props.isAuthenticated()) {
+    return <Redirect to ='/dashboards'></Redirect>;
+}
+    return (
+        <Login></Login>
+    )
 
-    }
+}
 
 export default Auth;

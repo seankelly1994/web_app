@@ -3,17 +3,22 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import './style.css';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
-const Register = () => {
+const Register = (props) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUserName] = useState("");
 
     const validateForm = () => {
         return email.length > 0 && password.length > 0;
       }
+
+    if (props.isAuthenticated()) {
+        return <Redirect to ='/dashboards'></Redirect>;
+    }
 
     return (
         <div>
@@ -71,8 +76,30 @@ const Register = () => {
                 </Form.Group>
                
             
-                <Button disabled={!validateForm()} type="submit" onClick={async() => {
-                    const user = {firstName, lastName, email, password};
+                <Button disabled={!validateForm()} onClick={async() => {
+                    const response = axios.post('/register', {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        password: password
+                    }).then(function(response){
+                        window.localStorage.setItem('authToken', response.data.auth_token);
+                        console.log(response);
+                    }).catch(function(error){
+                        console.log(error);
+                    })
+                }}>Register</Button>
+            
+            </Form>
+        </div>
+    )
+}
+
+export default Register;
+
+/*
+
+const user = {firstName, lastName, email, password};
 
                     const response = fetch('/register', {
                         method: 'POST',
@@ -82,15 +109,8 @@ const Register = () => {
                         body: JSON.stringify(user)
                     })
 
-                    if(response.ok) {
-                        console.log("Registration Successful");
-                    }
+                    console.log("Success");
 
-                }}>Register</Button>
-            
-            </Form>
-        </div>
-    )
-}
-
-export default Register;
+                    if(response) {
+                        console.log(response);
+                    }*/
