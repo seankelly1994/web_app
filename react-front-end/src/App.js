@@ -6,6 +6,8 @@ import ClientPage from './containers/clients/index';
 import Auth from './containers/auth/index';
 import Register from './components/register/index';
 import Header from './components/header/index';
+import { Provider } from 'react-redux';
+import store from './store';
 
 
 class App extends Component {
@@ -24,21 +26,23 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-          <div className="App">
-          <Sidebar></Sidebar>
-          <Header></Header>
-          <Route exact path='/register' render={() => (
-            <Register
-              isAuthenticated={this.isAuthenticated}
-            />
-          )} />
-          <Route exact path='/auth' render={() => (
-            <Auth
-              isAuthenticated={this.isAuthenticated}
-            />
-          )} />
-          <Route exact path="/clients" component={ClientPage}></Route>
-          </div>
+        <Provider>
+            <div className="App">
+            <Sidebar></Sidebar>
+            <Header></Header>
+            <Route exact path='/auth' render={() => (
+              <Auth
+                isAuthenticated={this.isAuthenticated}
+              />
+            )} />
+            <Route exact path='/register' render={() => (
+              <Register
+                isAuthenticated={this.isAuthenticated}
+              />
+            )} />
+            <Route exact path="/clients" component={ClientPage}></Route>
+            </div>
+        </Provider>
       </BrowserRouter>
     );
   }
