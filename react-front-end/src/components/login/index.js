@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import axios from 'axios';
 import "./style.css";
 import Button from 'react-bootstrap/Button';
-import { Redirect } from 'react-router-dom';
+import api from '../../utils/api/index';
 
 const Login = (props)  => {
   const [email, setEmail] = useState("");
@@ -50,11 +49,11 @@ const Login = (props)  => {
             </Form.Group>
 
             <Button disabled={!validateForm()} onClick={async() => {
-                const response = axios.post('/login', {
+                const response = api.post('/login', {
                     email: email,
                     password: password
                 }).then(function(response){
-                    window.localStorage.setItem('authToken', response.data.auth_token);
+                    window.localStorage.setItem('token', response.data.auth_token);
                     console.log(response);
                 }).catch(function(error){
                     console.log(error);

@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import api from '../../utils/api';
 import './style.css';
 
 class CreateClient extends Component {
@@ -86,20 +87,14 @@ class CreateClient extends Component {
 
                     <Button variant="primary" type="submit" onClick={async() => {
                         const client = {firstName, lastName, emailAddress, businessPhone};
-        
-                        const response = fetch('/create_client', {
-                            method: 'POST',
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(client)
-                        })
 
-                        console.log(client);
+                        try { 
+                            const response = api.post('/create_client', client);
+                            console.log(client);
+                         } catch (err) { 
+                            console.log(err);
+                            } 
         
-                        if (response.ok) {
-                            console.log('Response Worked')
-                        }
                     }}>Submit</Button>
                 </Form>
             </div>

@@ -8,7 +8,7 @@ const initialState = {
     user: null
 }
 
-export default function (state = initalState, action) {
+export default function (state = initialState, action) {
     switch(action.type) {
         case USER_LOADING:
             return {
@@ -35,6 +35,7 @@ export default function (state = initalState, action) {
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
+            localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import CreateClient from '../createclient/index';
+import api from '../../utils/api';
 
 class ClientList extends Component {
     constructor(props){
@@ -13,8 +14,7 @@ class ClientList extends Component {
     }
 
     componentDidMount() {
-        fetch('/clients').then(response => response.json())
-        .then(data => this.setState({clients: data.clients}))
+        api.get('/clients').then(res => this.setState({clients: res.data.clients}))
     }
 
     toggleCreateClient() {

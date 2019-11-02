@@ -16,7 +16,7 @@ import time
 def hello():
     return "Hello World!"
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login_user():
     # get post data
     user_data = request.get_json()
@@ -35,12 +35,15 @@ def login_user():
         user = User.query.filter_by(email_address=email).first()
 
         if user and check_password_hash(user.password, password):
-            auth_token = user.encode_auth_token(user.id)
-            print(auth_token)
-            if auth_token:
+            #auth_token = user.encode_auth_token(user.id)
+            access_token = create_access_token(identity=user.id)
+
+            print(access_token)
+            if access_token:
                 response_object['status'] = 'success'
                 response_object['message'] = 'Successfully logged in.'
-                response_object['auth_token'] = auth_token.decode()
+                response_object['auth_token'] = access_token
+
                 return jsonify(response_object), 200
         else:
             response_object['message'] = 'User does not exist.'
@@ -50,7 +53,7 @@ def login_user():
         return jsonify(response_object), 500
 
 
-@app.route('/logout', methods=['GET'])
+@app.route('/api/logout', methods=['GET'])
 def logout_user():
     auth_header = request.headers.get("Authorization")
     response_object = {
@@ -72,7 +75,7 @@ def logout_user():
         return jsonify(response_object), 403
 
 
-@app.route('/register', methods=['POST', 'GET'])
+@app.route('/api/register', methods=['POST', 'GET'])
 def register_user():
     # get post data
     user_data = request.get_json()
@@ -110,7 +113,7 @@ def register_user():
         return jsonify(response_object), 400
 
 
-@app.route('/create_client', methods=['POST'])
+@app.route('/api/create_client', methods=['POST'])
 def create_client():
     client_data = request.get_json()
     
@@ -127,10 +130,11 @@ def create_client():
 
     return 'Done', 201
 
-@app.route('/clients')
+@app.route('/api/clients')
+@jwt_required
 def clients():
-    #client_list = Client.query.all()
-    client_list = Client.query.filter_by(user_id = User.id)
+    client_list = Client.query.all()
+    #client_list = Client.query.filter_by(user_id = User.id)
     clients = []
 
     for client in client_list:
@@ -141,11 +145,42 @@ def clients():
                             'email_address': client.email_address,
                             'business_phone': client.business_phone
                         }
-                    )
+            
+                )
 
     return  jsonify({'clients': clients})
 
+@app.route('/api/users')
+def users():
+    user_list = User.query.all()
+    users = []
 
+    for user in user_list:
+        users.append({
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email_address': user.email_address,
+            'username': user.username,
+            'id': user.id
+        })
+    
+    return jsonify({'users': users})
+    
+# @app.route('/api/user')
+# def get_user():
+#     user = request.get_json()
+
+#     response_object = {
+#         'status': 'fail',
+#         'message': 'Invalid payload.'
+#     }
+#     if not user:
+#         return jsonify(response_object), 400
+    
+#     user = User.find_by_id(user.id)
+#     print(user)
+
+#     return jsonify({'user': user})
 
 if __name__ == '__main__':
     app.run()

@@ -8,6 +8,7 @@ import Register from './components/register/index';
 import Header from './components/header/index';
 import { Provider } from 'react-redux';
 import store from './store';
+import { loadUser } from './actions/authActions';
 
 
 class App extends Component {
@@ -23,10 +24,14 @@ class App extends Component {
     return false;
   }
 
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
+
   render() {
     return (
       <BrowserRouter>
-        <Provider>
+        <Provider store={store}>
             <div className="App">
             <Sidebar></Sidebar>
             <Header></Header>

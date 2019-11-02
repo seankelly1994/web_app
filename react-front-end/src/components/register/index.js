@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import './style.css';
-import axios from 'axios';
+import api from '../../utils/api/index';
 import { Redirect } from 'react-router-dom';
 
 const Register = (props) => {
@@ -77,13 +77,13 @@ const Register = (props) => {
                
             
                 <Button disabled={!validateForm()} onClick={async() => {
-                    const response = axios.post('/register', {
+                    const response = api.post('/register', {
                         firstName: firstName,
                         lastName: lastName,
                         email: email,
                         password: password
                     }).then(function(response){
-                        window.localStorage.setItem('authToken', response.data.auth_token);
+                        window.localStorage.setItem('token', response.data.auth_token);
                         console.log(response);
                     }).catch(function(error){
                         console.log(error);

@@ -15,7 +15,7 @@ api = Api(app)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config.from_object(Config)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'something-secret'
+app.config['JWT_SECRET_KEY'] = 'super-secret' # Change this!
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
@@ -23,6 +23,7 @@ bcrypt = Bcrypt(app)
 
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
+
 
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):

@@ -33,6 +33,10 @@ class User(db.Model):
         return cls.query.filter_by(username=username).first()
 
     @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
+
+    @classmethod
     def return_all(cls):
         def to_json(x):
             return {
@@ -98,7 +102,7 @@ class Client(db.Model):
     def __repr__(self):
         return '<Client()>'.format(self.first_name)
 
-class RevokedToken(db.Model):
+class RevokedTokenModel(db.Model):
     __tablename__ = 'revoked tokens'
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(120))
