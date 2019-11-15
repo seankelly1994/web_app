@@ -4,9 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import './style.css';
 import api from '../../utils/api/index';
-import { Redirect } from 'react-router-dom';
 
-const Register = (props) => {
+const Register = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -16,14 +15,10 @@ const Register = (props) => {
         return email.length > 0 && password.length > 0;
       }
 
-    if (props.isAuthenticated()) {
-        return <Redirect to ='/dashboards'></Redirect>;
-    }
-
     return (
         <div>
             <Form className="RegisterModal">
-                <Form.Group controlId="name" className="justify-content-md-center" className="Inputs">
+                <Form.Group controlId="name" className="Inputs justify-content-md-center">
                     <Form.Row>
                         <Col>
                             <Form.Label>First Name</Form.Label>
@@ -47,7 +42,7 @@ const Register = (props) => {
                     </Form.Row>
                 </Form.Group> 
                 
-                <Form.Group controlId="email" className="justify-content-md-center" className="Inputs">
+                <Form.Group controlId="email" className="Inputs justify-content-md-center">
                     <Form.Row>
                         <Col>
                             <Form.Label>Email</Form.Label>
@@ -61,7 +56,7 @@ const Register = (props) => {
                     </Form.Row>
                 </Form.Group>
 
-                <Form.Group controlId="password" className="justify-content-md-center" className="Inputs">
+                <Form.Group controlId="password" className="Inputs justify-content-md-center">
                     <Form.Row>
                         <Col>
                             <Form.Label>Password</Form.Label>
@@ -96,21 +91,3 @@ const Register = (props) => {
 }
 
 export default Register;
-
-/*
-
-const user = {firstName, lastName, email, password};
-
-                    const response = fetch('/register', {
-                        method: 'POST',
-                        headers: {
-                            "Content_Type": "application/json"
-                        }, 
-                        body: JSON.stringify(user)
-                    })
-
-                    console.log("Success");
-
-                    if(response) {
-                        console.log(response);
-                    }*/

@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import "./style.css";
 import Button from 'react-bootstrap/Button';
 import api from '../../utils/api/index';
+import { BrowserRouter } from 'react-router-dom';
 
 const Login = (props)  => {
   const [email, setEmail] = useState("");
@@ -15,6 +16,9 @@ const Login = (props)  => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+  }
+  const handleHistory = () => {
+    BrowserRouter.push('/dashboards');
   }
 
   return (
@@ -54,6 +58,7 @@ const Login = (props)  => {
                     password: password
                 }).then(function(response){
                     window.localStorage.setItem('token', response.data.auth_token);
+                    handleHistory();
                     console.log(response);
                 }).catch(function(error){
                     console.log(error);

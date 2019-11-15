@@ -19,11 +19,12 @@ instance.interceptors.request.use(request => {
   return request;
 });
 
+// TODO: rediret the user on 401 error status
 /*instance.interceptors.response.use(
   response => response,
   error => {
     if (error.response && error.response.status === 401) {
-      // auth error
+      // auth error - redirectto login
     } else if (!error.response) {
       // Network Error.
       return Promise.reject({ message: 'Network Error' });

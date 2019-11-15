@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import Login from '../../components/login/index';
-import { Redirect } from 'react-router-dom';
 
-const Auth = (props) => {
-
-if (props.isAuthenticated()) {
-    return <Redirect to ='/dashboards'></Redirect>;
-}
+const Auth = () => {
     return (
-        <Login></Login>
+        <Login />
     )
 
 }
