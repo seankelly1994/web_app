@@ -2,10 +2,10 @@ import react from 'react';
 import { ADD_ARTICLE } from '../actions/types';
 
 const initialState = {
-    articles: []
+    count: 5
 }
 
-function rootReducer(state = initialState, action) {
+const rootReducer = (state = initialState, action) => {
     if (action.type === ADD_ARTICLE) {
       return Object.assign({}, state, {
         articles: state.articles.concat(action.payload)
