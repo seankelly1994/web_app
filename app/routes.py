@@ -123,7 +123,6 @@ def create_client():
                         email_address=client_data['emailAddress'], 
                         business_phone=client_data['businessPhone']
                         )
-    print(current_user)
 
     #Commit the session
     db.session.add(new_client)

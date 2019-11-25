@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter } from "react-router-dom";
 import Routes from './Routes';
 import Sidebar from './components/sidebar/index';
+import Footer from './components/footer/index';
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
             <div className="App">
               <Sidebar />
               <Routes />
+              <Footer/>
             </div>
       </BrowserRouter>
     );

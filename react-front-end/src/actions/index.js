@@ -1,5 +1,13 @@
-import { ADD_ARTICLE } from '../actions/types';
+import { INCREMENT } from '../actions/types';
+import { DECREMENT } from '../actions/types';
 
-const addArticle = (payload) => {
-    return {type: ADD_ARTICLE, payload}
-};
+const increment = () => {
+    return {
+        type: INCREMENT
+    }
+}
+const decrement = () => {
+    return {
+        type: DECREMENT
+    }
+}

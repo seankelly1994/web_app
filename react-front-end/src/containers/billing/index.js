@@ -9,7 +9,11 @@ class Billing extends Component {
 
     render() {
         return (
-            <Counter value={this.props.ctr} />
+            <div>
+            <Counter/>
+            <button>Increase</button>
+            </div>
+            
         )
     }
 }
