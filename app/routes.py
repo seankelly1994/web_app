@@ -18,7 +18,7 @@ def hello():
 
 @app.route('/api/login', methods=['POST'])
 def login_user():
-    # get post data
+    #Get post data
     user_data = request.get_json()
     response_object = {
         'status': 'fail',
@@ -31,11 +31,11 @@ def login_user():
     password = user_data.get('password')
 
     try:
-        # fetch the user data
+        #Fetch the user data
         user = User.query.filter_by(email_address=email).first()
 
         if user and check_password_hash(user.password, password):
-            #auth_token = user.encode_auth_token(user.id)
+            #Auth_token = user.encode_auth_token(user.id)
             access_token = create_access_token(identity=user.id)
 
             print(access_token)
@@ -130,8 +130,8 @@ def create_client():
 
     return 'Done', 201
 
-@app.route('/api/clients')
-@jwt_required
+@app.route('/api/clients', methods=['GET'])
+#@jwt_required
 def clients():
     client_list = Client.query.all()
     #client_list = Client.query.filter_by(user_id = User.id)
@@ -150,7 +150,7 @@ def clients():
 
     return  jsonify({'clients': clients})
 
-@app.route('/api/users')
+@app.route('/api/users', methods=['GET'])
 def users():
     user_list = User.query.all()
     users = []
@@ -166,21 +166,24 @@ def users():
     
     return jsonify({'users': users})
     
-# @app.route('/api/user')
-# def get_user():
-#     user = request.get_json()
+#Route which dashboards page receives the data from
+@app.route('/api/dashboards/clients', methods=['GET'])
+def dashboard_data():
+    client_list = Client.query.all()
 
-#     response_object = {
-#         'status': 'fail',
-#         'message': 'Invalid payload.'
-#     }
-#     if not user:
-#         return jsonify(response_object), 400
-    
-#     user = User.find_by_id(user.id)
-#     print(user)
+    #Get the total number of clients
+    total_clients = len(client_list)
 
-#     return jsonify({'user': user})
+    #Set total emails to 0
+    total_emails = 0
+
+    #Get the total number of emails
+    for i in range(total_clients):
+        if(client_list[i].email_address is not None):
+            total_emails += 1
+
+    #Return the paylod
+    return jsonify({'total_clients': total_clients, 'total_emails': total_emails})
 
 if __name__ == '__main__':
     app.run()

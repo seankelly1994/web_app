@@ -1,11 +1,14 @@
 import React from 'react';
-import { INCREMENT, DECREMENT } from '../actions/types';
 import { combineReducers } from 'redux';
 import counterReducer from './counter';
 import loggedInReducer from './isLogged';
+import chartDisplayReducer from './chart';
 
-export default combineReducers({
-  counterReducer,
-  loggedInReducer
-})
+const rootReducer = combineReducers({
+  counter: counterReducer,
+  isLogged: loggedInReducer,
+  chartDisplay: chartDisplayReducer
+});
+
+export default rootReducer;
 

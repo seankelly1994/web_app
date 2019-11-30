@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import BarChart from '../../components/barChart/index';
 
 class Dashboards extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class Dashboards extends Component {
         return (
             <Container>
                 <Row>
-                    <Col>Dashboard 1</Col>
+                    <Col>
+                        <BarChart></BarChart>
+                    </Col>
                     <Col>Dashboard 1</Col>
                 </Row>
 

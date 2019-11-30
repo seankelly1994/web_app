@@ -4,7 +4,7 @@ const initialState = {
     count: 0
 }
 
-const counterReducer = (state = initialState, action) => {
+const counterReducer = (state = initialState.count, action) => {
   switch (action.type) {
     case INCREMENT:
       return state + 1;
