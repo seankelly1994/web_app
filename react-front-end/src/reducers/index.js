@@ -1,13 +1,12 @@
-import React from 'react';
 import { combineReducers } from 'redux';
-import counterReducer from './counter';
-import loggedInReducer from './isLogged';
-import chartDisplayReducer from './chart';
+import counterReducer from './counterReducer';
+import loadClientsReducer from './loadClientsReducer';
+import clientsMetaDataReducer from './clientsMetaDataReducer';
 
 const rootReducer = combineReducers({
   counter: counterReducer,
-  isLogged: loggedInReducer,
-  chartDisplay: chartDisplayReducer
+  loadClients: loadClientsReducer,
+  clientsMetaData: clientsMetaDataReducer
 });
 
 export default rootReducer;

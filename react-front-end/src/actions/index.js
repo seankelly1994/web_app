@@ -1,4 +1,9 @@
-import { INCREMENT, DECREMENT, DISPLAY } from '../actions/types';
+import { INCREMENT, DECREMENT, FETCH_CLIENTS_BEGIN, FETCH_CLIENTS_SUCCESS, FETCH_CLIENTS_FAILURE,
+    FETCH_CLIENTS_METADATA_BEGIN, FETCH_CLIENTS_METADATA_FAILURE, FETCH_CLIENTS_METADATA_SUCCESS,
+    LOGIN_BEGIN, LOGIN_SUCCESS, LOGIN_FAILURE 
+} from '../actions/types';
+import api from '../utils/api/index';
+
 
 export const increment = () => {
     return {
@@ -11,8 +16,38 @@ export const decrement = () => {
     }
 }
 
-export const display = () => {
-    return {
-        type: DISPLAY
+
+//This action is used to fetch the client list
+export const fetch_clients = () => async (dispatch) => {
+    dispatch({ type: FETCH_CLIENTS_BEGIN });
+    const res = await api.get('/dashboards/clients');
+    const total_clients = res.data.total_clients;
+    return dispatch({
+        type: FETCH_CLIENTS_SUCCESS, payload: { total_clients }
+    });
+}
+
+
+//This action is used to fetch the metadata for the charts
+export const render_chart = () => async (dispatch) => {
+    //Loading
+    dispatch({
+        type: FETCH_CLIENTS_METADATA_BEGIN
+    });
+
+    try {
+        const res = await api.get('/dashboards/clients');
+        //Success
+        dispatch ({
+            type: FETCH_CLIENTS_METADATA_SUCCESS,
+            payload: res.data        
+        })
+    } catch (err) {
+        console.log(err);
+        //Error
+        dispatch({
+            type: FETCH_CLIENTS_METADATA_FAILURE,
+            error: 'Error Fetching Data'
+        })
     }
 }

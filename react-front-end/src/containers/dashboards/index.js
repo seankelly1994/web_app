@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import BarChart from '../../components/barChart/index';
+import { connect } from 'react-redux';
+import Bar from '../../components/charts/bar/index';
+import Doughnuts from '../../components/charts/doughnut/index';
+import Pies from '../../components/charts/pie/index';
+import VerticalBar from '../../components/charts/verticalBar/index';
+import Card from 'react-bootstrap/Card';
+import './style.css';
 
 class Dashboards extends Component {
     constructor(props) {
@@ -11,21 +17,41 @@ class Dashboards extends Component {
 
     render() {
         return (
-            <Container>
-                <Row>
-                    <Col>
-                        <BarChart></BarChart>
+            <Container className="justify-content-md-center">
+                <Row className="justify-content-md-center">
+                    <Col xs={12} md={8} lg={5}>
+                        <Card>
+                            <Bar></Bar>
+                        </Card>
                     </Col>
-                    <Col>Dashboard 1</Col>
+                    <Col xs={12} md={8} lg={5}>
+                        <Card>
+                            <Doughnuts></Doughnuts>
+                        </Card>
+                    </Col>
                 </Row>
 
-                <Row>
-                    <Col>Dashboard 1</Col>
-                    <Col>Dashboard 1</Col>
+                <Row className="justify-content-md-center">
+                    <Col xs={12} md={8} lg={5}>
+                        <Card>
+                            <Pies></Pies>
+                        </Card>
+                    </Col>
+                    <Col xs={12} md={8} lg={5}>
+                        <Card>
+                            <VerticalBar></VerticalBar>
+                        </Card>
+                    </Col>
                 </Row>
             </Container>
         )
     }
 }
 
-export default Dashboards;
+const mapStateToProps = state => {
+    return {
+        data: state.clientsMetaData.data
+    };
+};
+
+export default connect(mapStateToProps)(Dashboards);
