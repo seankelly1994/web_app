@@ -18,7 +18,7 @@ class Dashboards extends Component {
     render() {
         return (
             <Container className="justify-content-md-center">
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center Row">
                     <Col xs={12} md={8} lg={5}>
                         <Card>
                             <Bar></Bar>
@@ -31,7 +31,7 @@ class Dashboards extends Component {
                     </Col>
                 </Row>
 
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center Row">
                     <Col xs={12} md={8} lg={5}>
                         <Card>
                             <Pies></Pies>

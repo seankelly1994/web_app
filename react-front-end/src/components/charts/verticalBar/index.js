@@ -10,16 +10,12 @@ import './style.css';
 const getChartData = (data) => {
 
     return {
+        labels: ['Total Clients', 'Total Emails'],
         datasets: [
             {
-                label: 'Total Clients',
-                data: [ data.total_clients ],
-                backgroundColor: '#254e58'
-            },
-            {
-                label: 'Total Emails',
-                data: [ data.total_emails ],
-                backgroundColor: '#124e15'
+                label: 'Total Clients vs Total Emails',
+                data: [ data.total_clients, data.total_emails ],
+                backgroundColor: ['#254e58', '#124e15']
             }
         ]
     }

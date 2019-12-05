@@ -5,6 +5,7 @@ import { INCREMENT, DECREMENT, FETCH_CLIENTS_BEGIN, FETCH_CLIENTS_SUCCESS, FETCH
 import api from '../utils/api/index';
 
 
+//These are test actions
 export const increment = () => {
     return {
         type: INCREMENT
@@ -13,6 +14,30 @@ export const increment = () => {
 export const decrement = () => {
     return {
         type: DECREMENT
+    }
+}
+
+//This action is used to maintain the login
+export const login_user = () => async (dispatch) => {
+    //Loading
+    dispatch({
+        type: LOGIN_BEGIN
+    });
+
+    try {
+        const res = await api.post('/login');
+        //Success
+        dispatch ({
+            type: LOGIN_SUCCESS,
+            token: res.data.auth_token        
+        })
+    } catch (err) {
+        console.log(err);
+        //Error
+        dispatch({
+            type: LOGIN_FAILURE,
+            error: 'Error Fetching Data'
+        })
     }
 }
 
