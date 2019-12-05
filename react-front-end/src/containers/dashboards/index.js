@@ -17,33 +17,35 @@ class Dashboards extends Component {
 
     render() {
         return (
-            <Container className="justify-content-md-center">
-                <Row className="justify-content-md-center Row">
-                    <Col xs={12} md={8} lg={5}>
-                        <Card>
-                            <Bar></Bar>
-                        </Card>
-                    </Col>
-                    <Col xs={12} md={8} lg={5}>
-                        <Card>
-                            <Doughnuts></Doughnuts>
-                        </Card>
-                    </Col>
-                </Row>
+            <div>
+                <Container className="justify-content-md-center Container">
+                    <Row className="justify-content-md-center Row">
+                        <Col xs={12} md={8} lg={5}>
+                            <Card>
+                                <Bar></Bar>
+                            </Card>
+                        </Col>
+                        <Col xs={12} md={8} lg={5}>
+                            <Card>
+                                <Doughnuts></Doughnuts>
+                            </Card>
+                        </Col>
+                    </Row>
 
-                <Row className="justify-content-md-center Row">
-                    <Col xs={12} md={8} lg={5}>
-                        <Card>
-                            <Pies></Pies>
-                        </Card>
-                    </Col>
-                    <Col xs={12} md={8} lg={5}>
-                        <Card>
-                            <VerticalBar></VerticalBar>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+                    <Row className="justify-content-md-center Row">
+                        <Col xs={12} md={8} lg={5}>
+                            <Card>
+                                <Pies></Pies>
+                            </Card>
+                        </Col>
+                        <Col xs={12} md={8} lg={5}>
+                            <Card>
+                                <VerticalBar></VerticalBar>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         )
     }
 }

@@ -39,7 +39,7 @@ export const login_user = () => async (dispatch) => {
             error: 'Error Fetching Data'
         })
     }
-}
+} 
 
 
 //This action is used to fetch the client list

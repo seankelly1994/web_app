@@ -5,8 +5,9 @@ import "./style.css";
 import Button from 'react-bootstrap/Button';
 import api from '../../utils/api/index';
 import { BrowserRouter } from 'react-router-dom';
-import login_user from '../../actions/index';
-import { bindActionCreators } from '../../../../../../../../AppData/Local/Microsoft/TypeScript/3.6/node_modules/redux';
+import { connect } from 'react-redux';
+import { login_user } from '../../actions/index';
+import { bindActionCreators } from "../../../../../../../AppData/Local/Microsoft/TypeScript/3.6/node_modules/redux";
 
 const Login = (props)  => {
   const [email, setEmail] = useState("");
